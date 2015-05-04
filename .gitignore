@@ -9,3 +9,4 @@ solr/*
 !solr/solr.xml
 spec/attachments
 config/newrelic.yml
+config/database.yml
