@@ -1,0 +1,10 @@
+base: &base
+  adapter: <%= db_adapter %>
+  host: <%= db_host %>
+  database: <%= db_database %>
+  username: <%= db_username %>
+  password: <%= db_password %>
+  timeout: 5000
+
+<%= fetch(:rails_env).to_s %>:
+  <<: *base

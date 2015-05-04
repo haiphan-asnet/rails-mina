@@ -3,10 +3,15 @@ $:.unshift './lib'
 require 'mina/multistage'
 require 'mina/bundler'
 require 'mina/rails'
-require 'mina/git'
+# require 'mina/git'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/rvm'    # for rvm support. (http://rvm.io)
 require 'mina/rsync'
+
+require 'mina/defaults'
+require 'mina/extras'
+require 'mina/dotenv'
+require 'mina/database'
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -39,7 +44,7 @@ set :rvm_env, "ruby-2.1.5@#{app}"
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'log']
+set :shared_paths, ['config/database.yml', 'log', '.env']
 
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
@@ -75,6 +80,8 @@ task :setup => :environment do
 
   # queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
   # queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml'."]
+
+  invoke :'database:update'
 end
 
 desc "Deploys the current version to the server."
@@ -87,11 +94,11 @@ task :deploy => :environment do
     # instance of your project.
     # invoke :'git:clone'
     invoke :'rsync:deploy'
-    # invoke :'deploy:link_shared_paths'
-    # invoke :'bundle:install'
+    invoke :'deploy:link_shared_paths'
+    invoke :'bundle:install'
     # invoke :'rails:db_migrate'
     # invoke :'rails:assets_precompile'
-    invoke :'deploy:cleanup'
+    # invoke :'deploy:cleanup'
 
     to :launch do
       # queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
@@ -107,3 +114,4 @@ end
 #  - http://nadarei.co/mina/settings
 #  - http://nadarei.co/mina/helpers
 
+invoke :'defaults:configs'

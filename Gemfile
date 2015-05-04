@@ -43,6 +43,8 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'dotenv'
+
 group :development do
   gem 'mina', require: false
   gem 'mina-rsync', require: false
