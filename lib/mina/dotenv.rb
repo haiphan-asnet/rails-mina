@@ -1,5 +1,5 @@
 namespace :dotenv do
-  desc "Set defaults config for database"
+  desc "Set defaults config for dotenv"
   task :defaults do
     set_default :dotenv_template          , '.env'
   end

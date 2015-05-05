@@ -9,9 +9,10 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 require 'mina/rsync'
 
 require 'mina/defaults'
-require 'mina/extras'
-require 'mina/dotenv'
-require 'mina/database'
+# require 'mina/extras'
+# require 'mina/dotenv'
+# require 'mina/database'
+require 'mina/unicorn'
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -20,7 +21,7 @@ require 'mina/database'
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :app, 'rails-mina'
-set :deploy_to, "$HOME/#{app}"
+set :deploy_to, "/home/#{user}/#{app}"
 
 # set :domain, 'foobar.com'
 # set :deploy_to, '/var/www/foobar.com'
